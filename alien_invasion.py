@@ -1,4 +1,13 @@
-""" Alien Invasion Project"""
+""" ___Alien Invasion Project___
+
+This is a space invaders clone that I created using Python Crash Course 2nd Addition.
+
+
+ChangeLog:
+9/20/20 - AJM Base Game Complete, now working on a persistent high score board - see high score board branch
+
+
+"""
 
 # imports
 import sys
