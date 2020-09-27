@@ -11,18 +11,18 @@ ChangeLog:
 
 # imports
 import sys
-from time import sleep
 from os.path import isfile
-from os import remove
+from time import sleep
+
 import pygame
 
-from settings import Settings
+from alien import Alien
+from bullet import Bullet
+from button import Button
 from game_stats import GameStats
 from scoreboard import Scoreboard
-from button import Button
+from settings import Settings
 from ship import Ship
-from bullet import Bullet
-from alien import Alien
 
 
 class AlienInvasion:
