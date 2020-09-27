@@ -174,7 +174,6 @@ class AlienInvasion:
             self.sb.prep_score()
             self.sb.check_high_score()
             se.alien_sound.play()
-            # TODO: se.background_sound.play()
 
         if not self.aliens:
             # Destroy existing bullets and create new fleet
@@ -196,6 +195,7 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
                 # Treat this the same as if the ship got hit
+                #TODO: se.alien_edge_sound.play()
                 self._ship_hit()
                 break
 
@@ -218,6 +218,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # decrement ships_left and update scoreboard
             self.stats.ships_left -= 1
+            se.ship_hit_sound.play()
             self.sb.prep_ships()
 
             # get rid of any remaining aliens and bullets
@@ -231,6 +232,7 @@ class AlienInvasion:
             # pause
             sleep(0.5)
         else:
+            se.game_over_sound.play()
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
