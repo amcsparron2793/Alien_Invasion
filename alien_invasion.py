@@ -130,7 +130,7 @@ class AlienInvasion:
             # if q is pressed quit the game
             sys.exit()
 
-        elif event.key == pygame.K_SPACE:
+        elif event.key == pygame.K_SPACE and self.stats.game_active is True:
             self._fire_bullet()
 
     def _check_keyup_events(self, event):
