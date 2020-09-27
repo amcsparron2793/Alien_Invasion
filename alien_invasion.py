@@ -12,7 +12,8 @@ ChangeLog:
 # imports
 import sys
 from time import sleep
-
+from os.path import isfile
+from os import remove
 import pygame
 
 from settings import Settings
@@ -117,6 +118,13 @@ class AlienInvasion:
             self.ship.moving_left = True
 
         elif event.key == pygame.K_q:
+            if isfile('./Current_HighScore.txt'):
+                with open('./Current_HighScore.txt', 'a') as file:
+                    file.truncate(0)
+                    file.write(str(self.stats.high_score))
+            elif not isfile('./Current_HighScore.txt'):
+                with open('./Current_HighScore.txt', 'w') as file:
+                    file.write(str(self.stats.high_score))
             # if q is pressed quit the game
             sys.exit()
 
