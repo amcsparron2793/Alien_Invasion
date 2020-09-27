@@ -96,6 +96,7 @@ class AlienInvasion:
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
+            se.button_sound.play()
 
             # get rid of any aliens and bullets
             self.aliens.empty()
@@ -173,6 +174,7 @@ class AlienInvasion:
             self.sb.prep_score()
             self.sb.check_high_score()
             se.alien_sound.play()
+            # TODO: se.background_sound.play()
 
         if not self.aliens:
             # Destroy existing bullets and create new fleet
