@@ -220,7 +220,6 @@ class AlienInvasion:
         else:
             with open('./Current_HighSore.txt', 'w') as file:
                 file.write(self.stats.high_score)
-            file.close()
 
             self.stats.game_active = False
             pygame.mouse.set_visible(True)

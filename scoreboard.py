@@ -72,7 +72,6 @@ class Scoreboard:
 
             with open('./Current_HighScore.txt', 'w') as file:
                 file.write(self.stats.score)
-            file.close()
 
             self.prep_high_score()
 
