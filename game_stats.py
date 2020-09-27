@@ -15,7 +15,7 @@ class GameStats:
         # high score never needs to be reset
         if isfile('./Current_HighScore.txt'):
             with open('./Current_HighScore.txt', 'r') as file:
-                file.read = int(self.high_score)
+                self.high_score = int(file.read())
             file.close()
         elif not isfile('./Current_HighScore.txt'):
             self.high_score = 0
