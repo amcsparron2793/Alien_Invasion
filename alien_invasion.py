@@ -172,6 +172,7 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
+            se.alien_sound.play()
 
         if not self.aliens:
             # Destroy existing bullets and create new fleet
