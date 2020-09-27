@@ -16,7 +16,6 @@ class GameStats:
         if isfile('./Current_HighScore.txt'):
             with open('./Current_HighScore.txt', 'r') as file:
                 self.high_score = int(file.read())
-            file.close()
         elif not isfile('./Current_HighScore.txt'):
             self.high_score = 0
 
