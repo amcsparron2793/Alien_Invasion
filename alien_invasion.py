@@ -195,7 +195,7 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
                 # Treat this the same as if the ship got hit
-                # TODO: se.alien_edge_sound.play()
+                se.alien_edge_sound.play()
                 self._ship_hit()
                 break
 
