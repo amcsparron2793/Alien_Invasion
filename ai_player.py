@@ -1,4 +1,5 @@
 from alien_invasion import AlienInvasion
+import pygame
 
 
 class AIPlayer:
@@ -12,8 +13,9 @@ class AIPlayer:
     def run_game(self):
         """Replaces the original run game(), so that we can interject our own controls."""
 
-        # start out in an active state
+        # start out in an active state and hide the mouse
         self.ai_game.stats.game_active = True
+        pygame.mouse.set_visible(False)
 
         # start the main loop for the game
         while True:
