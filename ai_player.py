@@ -24,12 +24,13 @@ class AIPlayer:
                 self.ai_game.ship.update()
                 self.ai_game._update_bullets()
                 self.ai_game._update_aliens()
+                self.ai_game._fire_bullet()
 
             self.ai_game._update_screen()
 
 
 if __name__ == '__main__':
-    ai_game = AlienInvasion
+    ai_game = AlienInvasion()
 
     ai_player = AIPlayer(ai_game)
     ai_player.run_game()
