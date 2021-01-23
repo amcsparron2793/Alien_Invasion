@@ -10,6 +10,7 @@ ChangeLog:
 """
 
 # imports
+import json
 import sys
 from os.path import isfile
 from time import sleep
@@ -119,14 +120,43 @@ class AlienInvasion:
             # move the ship to the left
             self.ship.moving_left = True
 
+        # if 'q' is pressed
         elif event.key == pygame.K_q:
+            # TODO: json scoreboard code here
+            # TODO: this needs to be worked on
+            if isfile('./Current_HighScore.json'):
+                with open('./Current_HighScore.json') as json_file:
+                    highscore_json = json.load(json_file)
+                    print(highscore_json)
+
+            elif not isfile('./Current_HighScore.json'):
+                with open('./Current_HighScore.json', 'w') as json_file:
+                    score_board = [{1: '1000000'},
+                                   {2: '100000'},
+                                   {3: '10000'},
+                                   {4: '1000'},
+                                   {5: '100'}]
+                    for x in score_board:
+                        for y in x.values():
+                            # TODO: this comparison works,
+                            #  getting the key of the value on its own is the issue
+                            #  (x.keys will print 'dict_val[4]')
+                            if self.stats.score > int(y):
+                                print(self.stats.score, y, x.keys())
+                                newval = {x.keys(), self.stats.score}
+                                print(x.get(int(y)))
+                                x.update(newval)
+                                print(score_board)
+                    json.dump(score_board, json_file, indent=4)
+
+            """# working text version
             if isfile('./Current_HighScore.txt'):
                 with open('./Current_HighScore.txt', 'a') as file:
                     file.truncate(0)
                     file.write(str(self.stats.high_score))
             elif not isfile('./Current_HighScore.txt'):
                 with open('./Current_HighScore.txt', 'w') as file:
-                    file.write(str(self.stats.high_score))
+                    file.write(str(self.stats.high_score))"""
             # if q is pressed quit the game
             sys.exit()
 
