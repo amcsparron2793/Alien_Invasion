@@ -14,7 +14,7 @@ class Settings:
         # Bullet settings
         # Dark grey bullets with a width of 3pix and a height of 15pix that moves slightly slower than the ship
 
-        self.bullet_width = 3  # TODO: setting this to 300 is a good idea for a powerup
+        self.bullet_width = 3  # TODO: setting this to 300 is a good idea for a power-up
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
