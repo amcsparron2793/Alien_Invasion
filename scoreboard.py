@@ -2,7 +2,7 @@ import pygame.font
 from pygame.sprite import Group
 
 from ship import Ship
-from os import path
+from os.path import isfile
 
 
 class Scoreboard:
@@ -17,7 +17,7 @@ class Scoreboard:
         self.stats = ai_game.stats
 
         # font settings for scoring information
-        self.text_color = (30, 30, 30)
+        self.text_color = self.settings.score_text_color
         self.font = pygame.font.SysFont(None, 48)
         # Prep the initial score images
         self.prep_score()
@@ -82,3 +82,12 @@ class Scoreboard:
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
         self.level_rect.top = self.score_rect.bottom + 10
+
+    def write_highscore(self):
+        if isfile('./Current_HighScore.txt'):
+            with open('./Current_HighScore.txt', 'a') as file:
+                file.truncate(0)
+                file.write(str(self.stats.high_score))
+        elif not isfile('./Current_HighScore.txt'):
+            with open('./Current_HighScore.txt', 'w') as file:
+                file.write(str(self.stats.high_score))

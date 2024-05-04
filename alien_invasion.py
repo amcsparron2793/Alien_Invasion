@@ -30,7 +30,7 @@ class AlienInvasion:
     """Overall Class to manage game assets and behavior"""
 
     def __init__(self):
-        """Initialize the game and and create game resources"""
+        """Initialize the game and create game resources"""
         pygame.init()
         self.settings = Settings()
 
@@ -90,7 +90,6 @@ class AlienInvasion:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
             # reset the game settings
-            self.settings.initialize_dynamic_settings()
             # reset the game statistics
             self.stats.reset_stats()
             self.stats.game_active = True
@@ -119,15 +118,9 @@ class AlienInvasion:
             # move the ship to the left
             self.ship.moving_left = True
 
-        elif event.key == pygame.K_q:
-            if isfile('./Current_HighScore.txt'):
-                with open('./Current_HighScore.txt', 'a') as file:
-                    file.truncate(0)
-                    file.write(str(self.stats.high_score))
-            elif not isfile('./Current_HighScore.txt'):
-                with open('./Current_HighScore.txt', 'w') as file:
-                    file.write(str(self.stats.high_score))
-            # if q is pressed quit the game
+        elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+            self.sb.write_highscore()
+            # if q or esc is pressed write the highscore file and quit the game
             sys.exit()
 
         elif event.key == pygame.K_SPACE and self.stats.game_active is True:
