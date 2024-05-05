@@ -17,7 +17,7 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = self.WHITE
-        self.score_text_color = self.WHITE
+        self.score_text_color = self.BLACK
 
         if self._dark_mode:
             self.bg_color = self.BLACK
