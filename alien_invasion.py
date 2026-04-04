@@ -29,10 +29,10 @@ import sound_effects as se
 class AlienInvasion:
     """Overall Class to manage game assets and behavior"""
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """Initialize the game and create game resources"""
         pygame.init()
-        self.settings = Settings()
+        self.settings = Settings(**kwargs)
 
         # TODO: fullscreen mode code - why doesnt this show the ship?
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -119,7 +119,7 @@ class AlienInvasion:
             self.ship.moving_left = True
 
         elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
-            self.sb.write_highscore()
+            self.stats.write_highscore()
             # if q or esc is pressed write the highscore file and quit the game
             sys.exit()
 
