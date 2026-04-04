@@ -1,12 +1,24 @@
 class Settings:
     """ A class to store all the settings for Alien Invasion. """
+    WHITE = (230, 230, 230)
+    BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
+    DEFAULT_SCREEN_WIDTH = 1200
+    DEFAULT_SCREEN_HEIGHT = 800
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """ Initialize the games static settings. """
+        self._dark_mode = kwargs.get('dark_mode', False)
+
         # Screen Settings
-        self.screen_width = 1200
-        self.screen_height = 800
-        self.bg_color = (230, 230, 230)
+        self.screen_width = kwargs.get('screen_width', self.__class__.DEFAULT_SCREEN_WIDTH)
+        self.screen_height = kwargs.get('screen_height', self.__class__.DEFAULT_SCREEN_HEIGHT)
+        self.bg_color = self.__class__.WHITE
+        self.score_text_color = self.__class__.BLACK
+
+        if self._dark_mode:
+            self.bg_color = self.__class__.BLACK
+            self.score_text_color = self.__class__.WHITE
 
         # Ship settings
         self.ship_limit = 3
@@ -16,11 +28,13 @@ class Settings:
 
         self.bullet_width = 3  # TODO: setting this to 300 is a good idea for a power-up
         self.bullet_height = 15
-        self.bullet_color = (60, 60, 60)
+        self.bullet_color = self.__class__.BLACK
+        if self._dark_mode:
+            self.bullet_color = self.__class__.RED
         self.bullets_allowed = 3
 
         # Alien Settings
-        self.fleet_drop_speed = 10
+        self.fleet_drop_speed = 5
 
         # how quickly the game speeds up
         self.speedup_scale = 1.1
@@ -28,13 +42,9 @@ class Settings:
         # how quickly the alien point values increase
         self.score_scale = 1.5
 
-        self.initialize_dynamic_settings()
-
-    def initialize_dynamic_settings(self):
-        """Init settings that change throughout the game"""
         self.ship_speed = 1.0
         self.bullet_speed = 1.5
-        self.alien_speed = 0.75
+        self.alien_speed = 0.25
 
         # fleet_direction of 1 represents right; -1 represents left
         self.fleet_direction = 1

@@ -1,3 +1,7 @@
-__pycache__/
-./Current_HighScore.txt
+__pycache__
+/logs
+/.idea/
+/venv/
+/.venv/
 *.pyc
+/Current_HighScore.txt
