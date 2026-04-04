@@ -2,5 +2,6 @@ __pycache__
 /logs
 /.idea/
 /venv/
+/.venv/
 *.pyc
 /Current_HighScore.txt

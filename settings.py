@@ -3,25 +3,22 @@ class Settings:
     WHITE = (230, 230, 230)
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
+    DEFAULT_SCREEN_WIDTH = 1200
+    DEFAULT_SCREEN_HEIGHT = 800
 
     def __init__(self, **kwargs):
         """ Initialize the games static settings. """
-        self._dark_mode = None
-        try:
-            if kwargs['dark_mode']:
-                self._dark_mode = kwargs['dark_mode']
-        except KeyError:
-            pass
+        self._dark_mode = kwargs.get('dark_mode', False)
 
         # Screen Settings
-        self.screen_width = 1200
-        self.screen_height = 800
-        self.bg_color = self.WHITE
-        self.score_text_color = self.BLACK
+        self.screen_width = kwargs.get('screen_width', self.__class__.DEFAULT_SCREEN_WIDTH)
+        self.screen_height = kwargs.get('screen_height', self.__class__.DEFAULT_SCREEN_HEIGHT)
+        self.bg_color = self.__class__.WHITE
+        self.score_text_color = self.__class__.BLACK
 
         if self._dark_mode:
-            self.bg_color = self.BLACK
-            self.score_text_color = self.WHITE
+            self.bg_color = self.__class__.BLACK
+            self.score_text_color = self.__class__.WHITE
 
         # Ship settings
         self.ship_limit = 3
@@ -31,9 +28,9 @@ class Settings:
 
         self.bullet_width = 3  # TODO: setting this to 300 is a good idea for a powerup
         self.bullet_height = 15
-        self.bullet_color = self.BLACK
+        self.bullet_color = self.__class__.BLACK
         if self._dark_mode:
-            self.bullet_color = self.RED
+            self.bullet_color = self.__class__.RED
         self.bullets_allowed = 3
 
         # Alien Settings
