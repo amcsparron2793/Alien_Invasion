@@ -4,14 +4,13 @@ This is a space invaders clone that I created using Python Crash Course 2nd Addi
 
 
 ChangeLog:
-9/20/20 - AJM Base Game Complete, now working on a persistent high score board - see high score board branch
+9/20/20 - AJM Base Game Complete, now working on a persistent high score board - see high score board branch - DONE
 
 
 """
 
 # imports
 import sys
-from os.path import isfile
 from time import sleep
 
 import pygame
