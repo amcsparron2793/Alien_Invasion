@@ -14,10 +14,9 @@ import sys
 from time import sleep
 
 import pygame
-
-from AlienInvasion import (Alien, Bullet, Button,
-                           GameStats, Images, Scoreboard,
-                           SoundEffects, Settings, Ship)
+from AlienInvasion.Backend import (Button, GameStats, Images,
+                                   Scoreboard, SoundEffects, Settings)
+from AlienInvasion import (Alien, Bullet, Ship)
 
 
 class AlienInvasion:
