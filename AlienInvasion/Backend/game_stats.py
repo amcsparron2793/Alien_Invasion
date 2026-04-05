@@ -4,7 +4,7 @@ from AlienInvasion import PROJECT_BASE_DIR
 
 class GameStats:
     """ Track statistics for Alien Invasion. """
-    DEFAULT_HIGHSCORE_PATH = Path(PROJECT_BASE_DIR.parent, 'Current_HighScore.txt')
+    DEFAULT_HIGHSCORE_PATH = Path(PROJECT_BASE_DIR, 'Current_HighScore.txt')
     DEFAULT_LEVEL = 1
 
     def __init__(self, ai_game):

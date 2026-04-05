@@ -1,6 +1,5 @@
 from pathlib import Path
-PROJECT_BASE_DIR = Path('./')
-
+PROJECT_BASE_DIR = Path('./AlienInvasion')
 
 from AlienInvasion import Backend, Sprites
 from AlienInvasion.alien_invasion import AlienInvasion

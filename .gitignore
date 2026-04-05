@@ -4,4 +4,4 @@ __pycache__
 /venv/
 /.venv/
 *.pyc
-/Current_HighScore.txt
+Current_HighScore.txt

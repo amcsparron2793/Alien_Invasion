@@ -6,9 +6,9 @@ pygame.mixer.init()
 
 class SoundEffects:
     """Plays sound effects"""
-    SFX_FOLDER_DEFAULT = Path(PROJECT_BASE_DIR.parent, 'sounds')
+    SFX_FOLDER_DEFAULT = Path(PROJECT_BASE_DIR, 'sounds')#.resolve()
     def __init__(self, **kwargs):
-        self._sfx_folder = kwargs.get('sfx_folder', self.__class__.SFX_FOLDER_DEFAULT)
+        self._sfx_folder = Path(kwargs.get('sfx_folder', self.__class__.SFX_FOLDER_DEFAULT))
         self.bullet_sound = pygame.mixer.Sound(Path(self._sfx_folder / 'bullet_fire.wav'))
         self.alien_hit_sound = pygame.mixer.Sound(Path(self._sfx_folder / 'alien_hit.wav'))
         self.button_sound = pygame.mixer.Sound(Path(self._sfx_folder / 'play_button.wav'))
