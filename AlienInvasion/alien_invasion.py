@@ -4,7 +4,7 @@ This is a space invaders clone that I created using Python Crash Course 2nd Addi
 
 
 ChangeLog:
-9/20/20 - AJM Base Game Complete, now working on a persistent high score board - see high score board branch
+9/20/20 - AJM Base Game Complete, now working on a persistent high score board - see high score board branch - DONE
 
 
 """
@@ -12,28 +12,23 @@ ChangeLog:
 # imports
 import json
 import sys
-from os.path import isfile
 from time import sleep
 
 import pygame
-
-from alien import Alien
-from bullet import Bullet
-from button import Button
-from game_stats import GameStats
-from scoreboard import Scoreboard
-from settings import Settings
-from ship import Ship
-import sound_effects as se
+from AlienInvasion.Backend import (Button, GameStats, Images,
+                                   Scoreboard, SoundEffects, Settings)
+from AlienInvasion.Sprites import Alien, Bullet, Ship
 
 
 class AlienInvasion:
     """Overall Class to manage game assets and behavior"""
 
-    def __init__(self):
-        """Initialize the game and and create game resources"""
+    def __init__(self, **kwargs):
+        """Initialize the game and create game resources"""
         pygame.init()
-        self.settings = Settings()
+        self.settings = Settings(**kwargs)
+        self.se = SoundEffects(**kwargs)
+        self.images = Images(**kwargs)
 
         # TODO: fullscreen mode code - why doesnt this show the ship?
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -46,7 +41,7 @@ class AlienInvasion:
             self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion!!")
 
-        # Create an instance to store game statistics,
+        # Create an instance to store game statistics
         # and create a scoreboard
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
@@ -59,6 +54,11 @@ class AlienInvasion:
 
         # make the play button
         self.play_button = Button(self, "Play")
+
+    def _set_level_starting_speed(self):
+        for lvl in range(self.stats.level):
+            self.settings.increase_speed()
+        # print(f"starting speed is: {self.settings.alien_speed}")
 
     def run_game(self):
         """start the main loop for the game"""
@@ -91,17 +91,18 @@ class AlienInvasion:
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.stats.game_active:
             # reset the game settings
-            self.settings.initialize_dynamic_settings()
             # reset the game statistics
             self.stats.reset_stats()
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
-            se.button_sound.play()
+            self.se.button_sound.play()
 
             # get rid of any aliens and bullets
             self.aliens.empty()
             self.bullets.empty()
+            self._set_level_starting_speed()
+
 
             # create a new fleet and center the ship
             self._create_fleet()
@@ -120,7 +121,12 @@ class AlienInvasion:
             # move the ship to the left
             self.ship.moving_left = True
 
+        elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
+            self.stats.write_highscore()
+            # if q or esc is pressed write the highscore file and quit the game
         # if 'q' is pressed
+
+        # TODO: update write_highscore with this?
         elif event.key == pygame.K_q:
             # TODO: json scoreboard code here
             # TODO: this needs to be worked on
@@ -148,16 +154,6 @@ class AlienInvasion:
                                 x.update(newval)
                                 print(score_board)
                     json.dump(score_board, json_file, indent=4)
-
-            """# working text version
-            if isfile('./Current_HighScore.txt'):
-                with open('./Current_HighScore.txt', 'a') as file:
-                    file.truncate(0)
-                    file.write(str(self.stats.high_score))
-            elif not isfile('./Current_HighScore.txt'):
-                with open('./Current_HighScore.txt', 'w') as file:
-                    file.write(str(self.stats.high_score))"""
-            # if q is pressed quit the game
             sys.exit()
 
         elif event.key == pygame.K_SPACE and self.stats.game_active is True:
@@ -174,8 +170,9 @@ class AlienInvasion:
         """ Create a new bullet and add it to the bullets group. """
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
+            # noinspection PyTypeChecker
             self.bullets.add(new_bullet)
-            se.bullet_sound.play()
+            self.se.bullet_sound.play()
 
     def _update_bullets(self):
         """ Update position of bullets and get rid of old bullets. """
@@ -203,16 +200,17 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
-            se.alien_sound.play()
+            self.se.alien_hit_sound.play()
 
         if not self.aliens:
-            # Destroy existing bullets and create new fleet
+            # Destroy existing bullets and create a new fleet
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
 
             # increase level
             self.stats.level += 1
+            # print(f"speed for level: {self.stats.level} is {round(self.settings.alien_speed, 4)}")
             self.sb.prep_level()
 
             # old testing stuff
@@ -225,7 +223,7 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
                 # Treat this the same as if the ship got hit
-                se.alien_edge_sound.play()
+                self.se.alien_edge_sound.play()
                 self._ship_hit()
                 break
 
@@ -237,6 +235,7 @@ class AlienInvasion:
         self.aliens.update()
 
         # look for alien ship collisions
+        # noinspection PyTypeChecker
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
 
@@ -248,7 +247,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # decrement ships_left and update scoreboard
             self.stats.ships_left -= 1
-            se.ship_hit_sound.play()
+            self.se.ship_hit_sound.play()
             self.sb.prep_ships()
 
             # get rid of any remaining aliens and bullets
@@ -262,7 +261,7 @@ class AlienInvasion:
             # pause
             sleep(0.5)
         else:
-            se.game_over_sound.play()
+            self.se.game_over_sound.play()
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
