@@ -1,10 +1,16 @@
 import pygame
+from pathlib import Path
 
 pygame.mixer.init()
 
-bullet_sound = pygame.mixer.Sound('sounds/bullet_fire.wav')
-alien_sound = pygame.mixer.Sound('sounds/alien_hit.wav')
-button_sound = pygame.mixer.Sound('sounds/play_button.wav')
-alien_edge_sound = pygame.mixer.Sound('sounds/Alien_Edge.wav')
-ship_hit_sound = pygame.mixer.Sound('sounds/ship_hit.wav')
-game_over_sound = pygame.mixer.Sound('sounds/game_over.wav')
+class SoundEffects:
+    """Plays sound effects"""
+    SFX_FOLDER_DEFAULT = Path('sounds')
+    def __init__(self, **kwargs):
+        self._sfx_folder = kwargs.get('sfx_folder', self.__class__.SFX_FOLDER_DEFAULT)
+        self.bullet_sound = pygame.mixer.Sound(self._sfx_folder / 'bullet_fire.wav')
+        self.alien_sound = pygame.mixer.Sound(self._sfx_folder / 'alien_hit.wav')
+        self.button_sound = pygame.mixer.Sound(self._sfx_folder / 'play_button.wav')
+        self.alien_edge_sound = pygame.mixer.Sound(self._sfx_folder / 'Alien_Edge.wav')
+        self.ship_hit_sound = pygame.mixer.Sound(self._sfx_folder / 'ship_hit.wav')
+        self.game_over_sound = pygame.mixer.Sound(self._sfx_folder / 'game_over.wav')

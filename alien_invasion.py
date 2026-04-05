@@ -22,7 +22,7 @@ from game_stats import GameStats
 from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
-import sound_effects as se
+from sound_effects import SoundEffects
 
 
 class AlienInvasion:
@@ -32,6 +32,7 @@ class AlienInvasion:
         """Initialize the game and create game resources"""
         pygame.init()
         self.settings = Settings(**kwargs)
+        self.se = SoundEffects(**kwargs)
 
         # TODO: fullscreen mode code - why doesnt this show the ship?
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -44,7 +45,7 @@ class AlienInvasion:
             self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion!!")
 
-        # Create an instance to store game statistics,
+        # Create an instance to store game statistics
         # and create a scoreboard
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
@@ -94,7 +95,7 @@ class AlienInvasion:
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
-            se.button_sound.play()
+            self.se.button_sound.play()
 
             # get rid of any aliens and bullets
             self.aliens.empty()
@@ -136,8 +137,9 @@ class AlienInvasion:
         """ Create a new bullet and add it to the bullets group. """
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
+            # noinspection PyTypeChecker
             self.bullets.add(new_bullet)
-            se.bullet_sound.play()
+            self.se.bullet_sound.play()
 
     def _update_bullets(self):
         """ Update position of bullets and get rid of old bullets. """
@@ -165,7 +167,7 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
-            se.alien_sound.play()
+            self.se.alien_sound.play()
 
         if not self.aliens:
             # Destroy existing bullets and create new fleet
@@ -187,7 +189,7 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= screen_rect.bottom:
                 # Treat this the same as if the ship got hit
-                se.alien_edge_sound.play()
+                self.se.alien_edge_sound.play()
                 self._ship_hit()
                 break
 
@@ -199,6 +201,7 @@ class AlienInvasion:
         self.aliens.update()
 
         # look for alien ship collisions
+        # noinspection PyTypeChecker
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
 
@@ -210,7 +213,7 @@ class AlienInvasion:
         if self.stats.ships_left > 0:
             # decrement ships_left and update scoreboard
             self.stats.ships_left -= 1
-            se.ship_hit_sound.play()
+            self.se.ship_hit_sound.play()
             self.sb.prep_ships()
 
             # get rid of any remaining aliens and bullets
@@ -224,7 +227,7 @@ class AlienInvasion:
             # pause
             sleep(0.5)
         else:
-            se.game_over_sound.play()
+            self.se.game_over_sound.play()
             self.stats.game_active = False
             pygame.mouse.set_visible(True)
 
