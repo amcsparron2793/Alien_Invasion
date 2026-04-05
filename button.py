@@ -1,19 +1,24 @@
 import pygame.font
-
+from settings import Settings
 
 class Button:
-    def __init__(self, ai_game, msg):
+    """ A button class to handle the play button. """
+    DEFAULT_BUTTON_WIDTH = 200
+    DEFAULT_BUTTON_HEIGHT = 50
+    def __init__(self, ai_game, msg, **kwargs):
         """ Init button attributes. """
-        self.screen = ai_game.screen
+        self.game = ai_game
+        self.screen = self.game.screen
         self.screen_rect = self.screen.get_rect()
 
-        # set the demensions and properties of the button
-        self.width, self.height = 200, 50
-        self.button_color = (0, 255, 0)
-        self.text_color = (255, 255, 255)
+        # set the dimensions and properties of the button
+        self.width, self.height = (kwargs.get('width', self.__class__.DEFAULT_BUTTON_WIDTH),
+                                   kwargs.get('height', self.__class__.DEFAULT_BUTTON_HEIGHT))
+        self.button_color = kwargs.get('button_color', Settings.GREEN)
+        self.text_color = kwargs.get('text_color', Settings.WHITE)
         self.font = pygame.font.SysFont(None, 48)
 
-        # build the buttons rect object and center it
+        # build the button's rect object and center it
         self.rect = pygame.Rect(0, 0, self.width, self.height)
         self.rect.center = self.screen_rect.center
 
@@ -28,6 +33,6 @@ class Button:
         self.msg_image_rect.center = self.rect.center
 
     def draw_button(self):
-        # draw the blank button and then draw message
+        # draw the blank button and then draw the message
         self.screen.fill(self.button_color, self.rect)
         self.screen.blit(self.msg_image, self.msg_image_rect)

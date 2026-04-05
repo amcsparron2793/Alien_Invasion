@@ -23,6 +23,7 @@ from scoreboard import Scoreboard
 from settings import Settings
 from ship import Ship
 from sound_effects import SoundEffects
+from images import Images
 
 
 class AlienInvasion:
@@ -33,6 +34,7 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings(**kwargs)
         self.se = SoundEffects(**kwargs)
+        self.images = Images(**kwargs)
 
         # TODO: fullscreen mode code - why doesnt this show the ship?
         # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -58,6 +60,11 @@ class AlienInvasion:
 
         # make the play button
         self.play_button = Button(self, "Play")
+
+    def _set_level_starting_speed(self):
+        for lvl in range(self.stats.level):
+            self.settings.increase_speed()
+        # print(f"starting speed is: {self.settings.alien_speed}")
 
     def run_game(self):
         """start the main loop for the game"""
@@ -100,6 +107,8 @@ class AlienInvasion:
             # get rid of any aliens and bullets
             self.aliens.empty()
             self.bullets.empty()
+            self._set_level_starting_speed()
+
 
             # create a new fleet and center the ship
             self._create_fleet()
@@ -167,16 +176,17 @@ class AlienInvasion:
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()
-            self.se.alien_sound.play()
+            self.se.alien_hit_sound.play()
 
         if not self.aliens:
-            # Destroy existing bullets and create new fleet
+            # Destroy existing bullets and create a new fleet
             self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
 
             # increase level
             self.stats.level += 1
+            # print(f"speed for level: {self.stats.level} is {round(self.settings.alien_speed, 4)}")
             self.sb.prep_level()
 
             # old testing stuff

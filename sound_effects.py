@@ -9,7 +9,7 @@ class SoundEffects:
     def __init__(self, **kwargs):
         self._sfx_folder = kwargs.get('sfx_folder', self.__class__.SFX_FOLDER_DEFAULT)
         self.bullet_sound = pygame.mixer.Sound(self._sfx_folder / 'bullet_fire.wav')
-        self.alien_sound = pygame.mixer.Sound(self._sfx_folder / 'alien_hit.wav')
+        self.alien_hit_sound = pygame.mixer.Sound(self._sfx_folder / 'alien_hit.wav')
         self.button_sound = pygame.mixer.Sound(self._sfx_folder / 'play_button.wav')
         self.alien_edge_sound = pygame.mixer.Sound(self._sfx_folder / 'Alien_Edge.wav')
         self.ship_hit_sound = pygame.mixer.Sound(self._sfx_folder / 'ship_hit.wav')

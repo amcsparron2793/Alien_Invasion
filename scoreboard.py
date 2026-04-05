@@ -6,6 +6,10 @@ from ship import Ship
 
 class Scoreboard:
     """ A class to report scoring information. """
+    SCORE_RECT_RIGHT_TOP_OFFSET = 20
+    LEVEL_RECT_BOTTOM_OFFSET = 10
+    SHIP_COUNT_X_RECT_OFFSET = 10
+    SHIP_COUNT_Y_RECT_OFFSET = 10
 
     def __init__(self, ai_game):
         """ Init scorekeeping attributes. """
@@ -17,11 +21,11 @@ class Scoreboard:
         self.score_image = None
         self.level_image = None
 
-        self.ai_game = ai_game
-        self.screen = ai_game.screen
+        self.game = ai_game
+        self.screen = self.game.screen
         self.screen_rect = self.screen.get_rect()
-        self.settings = ai_game.settings
-        self.stats = ai_game.stats
+        self.settings = self.game.settings
+        self.stats = self.game.stats
 
         # font settings for scoring information
         self.text_color = self.settings.score_text_color
@@ -36,16 +40,16 @@ class Scoreboard:
         """ Show how many ships you have left"""
         self.ships = Group()
         for ship_number in range(self.stats.ships_left):
-            ship = Ship(self.ai_game)
-            ship.rect.x = 10 + ship_number * ship.rect.width
-            ship.rect.y = 10
+            ship = Ship(self.game)
+            ship.rect.x = self.__class__.SHIP_COUNT_X_RECT_OFFSET + ship_number * ship.rect.width
+            ship.rect.y = self.__class__.SHIP_COUNT_Y_RECT_OFFSET  # one row of ships - places row below score
             self.ships.add(ship)
 
     def prep_high_score(self):
         """ Turn the high score into a rendered image. """
 
         highscore = round(self.stats.highscore, -1)
-        highscore_str = "{:,}".format(highscore)
+        highscore_str = f"{highscore:,}"
         self.highscore_image = self.font.render(highscore_str, True,
                                                 self.text_color, self.settings.bg_color)
 
@@ -57,14 +61,14 @@ class Scoreboard:
     def prep_score(self):
         """ Turn the score value into a rendered image. """
         rounded_score = round(self.stats.score, -1)
-        score_str = "{:,}".format(rounded_score)
+        score_str = f"{rounded_score:,}"
         self.score_image = self.font.render(score_str, True,
                                             self.text_color, self.settings.bg_color)
 
         # Display the score at the top right of the screen
         self.score_rect = self.score_image.get_rect()
-        self.score_rect.right = self.screen_rect.right - 20
-        self.score_rect.top = 20
+        self.score_rect.right = self.screen_rect.right - self.__class__.SCORE_RECT_RIGHT_TOP_OFFSET
+        self.score_rect.top = self.__class__.SCORE_RECT_RIGHT_TOP_OFFSET
 
     def show_score(self):
         """ Draw scores, level and ships to the screen. """
@@ -88,4 +92,4 @@ class Scoreboard:
         # position the level below the score
         self.level_rect = self.level_image.get_rect()
         self.level_rect.right = self.score_rect.right
-        self.level_rect.top = self.score_rect.bottom + 10
+        self.level_rect.top = self.score_rect.bottom + self.__class__.LEVEL_RECT_BOTTOM_OFFSET

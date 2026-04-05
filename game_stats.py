@@ -4,13 +4,15 @@ from pathlib import Path
 class GameStats:
     """ Track statistics for Alien Invasion. """
     DEFAULT_HIGHSCORE_PATH = './Current_HighScore.txt'
+    DEFAULT_LEVEL = 3
 
     def __init__(self, ai_game):
         """ Initialize statistics. """
-        self.settings = ai_game.settings
+        self.game = ai_game
+        self.settings = self.game.settings
         self.ships_left = self.settings.ship_limit
         self.score = 0
-        self.level = 1
+        self.level = self.__class__.DEFAULT_LEVEL
         self.highscore = 0
 
         self.reset_stats()
@@ -45,4 +47,4 @@ class GameStats:
         """ Initialize statistics that can change during the game. """
         self.ships_left = self.settings.ship_limit
         self.score = 0
-        self.level = 1
+        self.level = self.__class__.DEFAULT_LEVEL

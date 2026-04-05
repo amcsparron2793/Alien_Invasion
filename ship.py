@@ -8,12 +8,13 @@ class Ship(Sprite):
     def __init__(self, ai_game):
         """ initialize the ship and set its starting position. """
         super().__init__()
-        self.screen = ai_game.screen
-        self.settings = ai_game.settings
-        self.screen_rect = ai_game.screen.get_rect()
+        self.game = ai_game
+        self.screen = self.game.screen
+        self.settings = self.game.settings
+        self.screen_rect = self.game.screen.get_rect()
 
         # load the ship image and get its rectangle
-        self.image = pygame.image.load('images/ship.bmp')
+        self.image = self.game.images.ship_image
         self.rect = self.image.get_rect()
 
         # start each new ship at the bottom center of the screen
@@ -35,6 +36,7 @@ class Ship(Sprite):
             self.x -= self.settings.ship_speed
 
         # Update rect object from self.x
+        # noinspection PyTypeChecker
         self.rect.x = self.x
 
     def biltme(self):

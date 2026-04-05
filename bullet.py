@@ -8,13 +8,14 @@ class Bullet(Sprite):
     def __init__(self, ai_game):
         """ Create a bullet object at the ships current position. """
         super().__init__()
-        self.screen = ai_game.screen
-        self.settings = ai_game.settings
+        self.game = ai_game
+        self.screen = self.game.screen
+        self.settings = self.game.settings
         self.color = self.settings.bullet_color
 
         # create a bullet rectangle at (0, 0) and then set correct position
         self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
-        self.rect.midtop = ai_game.ship.rect.midtop
+        self.rect.midtop = self.game.ship.rect.midtop
 
         # store the bullet's position as a decimal value
         self.y = float(self.rect.y)
@@ -24,6 +25,7 @@ class Bullet(Sprite):
         # update the decimal position of the bullet
         self.y -= self.settings.bullet_speed
         # update the rect position
+        # noinspection PyTypeChecker
         self.rect.y = self.y
 
     def draw_bullet(self):

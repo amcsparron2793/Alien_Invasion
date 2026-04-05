@@ -3,6 +3,7 @@ class Settings:
     WHITE = (230, 230, 230)
     BLACK = (0, 0, 0)
     RED = (255, 0, 0)
+    GREEN = (0, 255, 0)
     DEFAULT_SCREEN_WIDTH = 1200
     DEFAULT_SCREEN_HEIGHT = 800
 
@@ -24,7 +25,7 @@ class Settings:
         self.ship_limit = 3
 
         # Bullet settings
-        # Dark grey bullets with a width of 3pix and a height of 15pix that moves slightly slower than the ship
+        # Dark gray bullets with a width of 3pix and a height of 15pix that moves slightly slower than the ship
 
         self.bullet_width = 3  # TODO: setting this to 300 is a good idea for a powerup
         self.bullet_height = 15
