@@ -1,11 +1,12 @@
 import pygame
 from pathlib import Path
+from AlienInvasion import PROJECT_BASE_DIR
 
 pygame.mixer.init()
 
 class SoundEffects:
     """Plays sound effects"""
-    SFX_FOLDER_DEFAULT = Path('./sounds')
+    SFX_FOLDER_DEFAULT = Path(PROJECT_BASE_DIR.parent, 'sounds')
     def __init__(self, **kwargs):
         self._sfx_folder = kwargs.get('sfx_folder', self.__class__.SFX_FOLDER_DEFAULT)
         self.bullet_sound = pygame.mixer.Sound(Path(self._sfx_folder / 'bullet_fire.wav'))

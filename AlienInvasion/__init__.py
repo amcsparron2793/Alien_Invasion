@@ -1,7 +1,8 @@
-from AlienInvasion import Backend
-from AlienInvasion.alien import Alien
-from AlienInvasion.bullet import Bullet
-from AlienInvasion.ship import Ship
+from pathlib import Path
+PROJECT_BASE_DIR = Path('./')
+
+
+from AlienInvasion import Backend, Sprites
 from AlienInvasion.alien_invasion import AlienInvasion
 
-__all__ = ['Alien', 'Bullet', 'Backend', 'Ship', 'AlienInvasion']
+__all__ = ['PROJECT_BASE_DIR', 'Sprites', 'Backend', 'AlienInvasion']

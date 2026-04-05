@@ -16,7 +16,7 @@ from time import sleep
 import pygame
 from AlienInvasion.Backend import (Button, GameStats, Images,
                                    Scoreboard, SoundEffects, Settings)
-from AlienInvasion import (Alien, Bullet, Ship)
+from AlienInvasion.Sprites import Alien, Bullet, Ship
 
 
 class AlienInvasion:
