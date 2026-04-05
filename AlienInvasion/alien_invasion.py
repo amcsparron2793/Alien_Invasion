@@ -15,15 +15,9 @@ from time import sleep
 
 import pygame
 
-from alien import Alien
-from bullet import Bullet
-from button import Button
-from game_stats import GameStats
-from scoreboard import Scoreboard
-from settings import Settings
-from ship import Ship
-from sound_effects import SoundEffects
-from images import Images
+from AlienInvasion import (Alien, Bullet, Button,
+                           GameStats, Images, Scoreboard,
+                           SoundEffects, Settings, Ship)
 
 
 class AlienInvasion:

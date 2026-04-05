@@ -3,7 +3,7 @@ from pathlib import Path
 
 class GameStats:
     """ Track statistics for Alien Invasion. """
-    DEFAULT_HIGHSCORE_PATH = './Current_HighScore.txt'
+    DEFAULT_HIGHSCORE_PATH = '../Current_HighScore.txt'
     DEFAULT_LEVEL = 3
 
     def __init__(self, ai_game):
